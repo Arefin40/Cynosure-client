@@ -1,6 +1,11 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import {
    createUserWithEmailAndPassword,
+   GithubAuthProvider,
+   GoogleAuthProvider,
+   FacebookAuthProvider,
+   signInWithEmailAndPassword,
+   signInWithPopup,
    updateProfile,
    signOut,
 } from "firebase/auth";
@@ -21,6 +26,12 @@ const formattedErrorMessage = (errorMessage) => {
       : errorMessage;
 };
 
+const providers = {
+   google: new GoogleAuthProvider(),
+   github: new GithubAuthProvider(),
+   facebook: new FacebookAuthProvider(),
+};
+
 export const AuthProvider = ({ children }) => {
    const [user, setUser] = useState(null);
    const [isAuthenticating, setIsAuthenticating] = useState(true);
@@ -37,6 +48,30 @@ export const AuthProvider = ({ children }) => {
          if (callbackFunction) callbackFunction();
          toast.success("Account created successfully");
          setUser({ ...userCredential.user, displayName, photoURL });
+      } catch (error) {
+         toast.error(formattedErrorMessage(error.code));
+      }
+   };
+
+   const signInWithProvider = (authProvider, callbackFunction) => async (e) => {
+      e.preventDefault();
+      setIsAuthenticating(true);
+
+      try {
+         await signInWithPopup(auth, providers[authProvider]);
+         if (callbackFunction) callbackFunction();
+         toast.success("Signed in successfully");
+      } catch (error) {
+         toast.error(formattedErrorMessage(error.code));
+      }
+   };
+
+   const logIn = async ({ email, password }, callbackFunction) => {
+      setIsAuthenticating(true);
+      try {
+         await signInWithEmailAndPassword(auth, email, password);
+         if (callbackFunction) callbackFunction();
+         toast.success("Signed-in successfully");
       } catch (error) {
          toast.error(formattedErrorMessage(error.code));
       }
@@ -64,6 +99,8 @@ export const AuthProvider = ({ children }) => {
       user,
       isAuthenticating,
       createAccount,
+      signInWithProvider,
+      signInWithEmail: logIn,
       signOut: logOut,
    };
 
