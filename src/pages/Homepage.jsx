@@ -11,7 +11,7 @@ const Homepage = () => {
                <div>
                   <h4 className="text-gray-800 font-medium">Discover</h4>
 
-                  <h1 className="mt-2 mb-3 text-4xl sm:text-5xl text-gray-800 font-extrabold leading-snug sm:leading-tight">
+                  <h1 className="mt-2 mb-3 text-3xl sm:text-4xl text-gray-800 font-extrabold leading-snug">
                      Explore Our Hotel and Nearby Attractions
                   </h1>
 

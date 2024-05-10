@@ -13,3 +13,14 @@
 .bg-blur {
    @apply bg-white backdrop-filter backdrop-blur-md bg-opacity-50;
 }
+
+.leaflet-control {
+   z-index: 0 !important;
+}
+.leaflet-pane {
+   z-index: 0 !important;
+}
+.leaflet-top,
+.leaflet-bottom {
+   z-index: 0 !important;
+}
