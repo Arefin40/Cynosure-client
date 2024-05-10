@@ -1,9 +1,10 @@
+import Header from "@containers/Header";
 import { Outlet } from "react-router-dom";
 
 const Layout = () => {
    return (
       <>
-         <div className="py-12 flex justify-center border">Header</div>
+         <Header />
 
          <main>
             <Outlet />
