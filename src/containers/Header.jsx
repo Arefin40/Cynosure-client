@@ -1,7 +1,9 @@
 import { NavLink } from "react-router-dom";
 import { useBoolean } from "@hooks";
+import { useAuth } from "@contexts/AuthContext";
 import Drawer from "@components/Drawer";
 import Button from "@components/Button";
+import UserCard from "@containers/UserCard";
 import UserMenu from "@containers/UserMenu";
 
 const navigations = [
@@ -29,6 +31,7 @@ const navigations = [
 ];
 
 export default () => {
+   const { user } = useAuth();
    const { active, open, close } = useBoolean(false);
 
    return (
@@ -63,14 +66,18 @@ export default () => {
                </ul>
 
                <div className="m-2 mb-5 mt-auto rounded-lg lg:hidden">
-                  <Button
-                     to="/login"
-                     color="primary"
-                     size="large"
-                     className="w-full"
-                  >
-                     Login
-                  </Button>
+                  {user ? (
+                     <UserCard className="w-full text-sm" />
+                  ) : (
+                     <Button
+                        to="/login"
+                        color="primary"
+                        size="large"
+                        className="w-full"
+                     >
+                        Login
+                     </Button>
+                  )}
                </div>
             </Drawer>
 
