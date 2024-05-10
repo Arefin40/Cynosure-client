@@ -37,6 +37,7 @@ export default ({
     * @returns {string} Fallback content.
     */
    const extractFallbackContent = (alt) => {
+      if (!alt) return;
       const words = alt.split(" ");
       const content =
          words.length > 1
