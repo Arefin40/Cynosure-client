@@ -4,6 +4,7 @@ import RouterProvider from "@pages/RouterProvider";
 import AOS from "aos";
 
 import "aos/dist/aos.css";
+import "leaflet/dist/leaflet.css";
 import "./index.css";
 
 AOS.init();
