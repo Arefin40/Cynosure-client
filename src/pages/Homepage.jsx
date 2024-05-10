@@ -1,5 +1,7 @@
 import Button from "@components/Button";
 import MapView from "@containers/MapView";
+import ReviewCard from "@containers/ReviewCard";
+import SectionHeading from "@containers/SectionHeading";
 
 const Homepage = () => {
    document.title = "Cynosure";
@@ -34,6 +36,37 @@ const Homepage = () => {
                </div>
 
                <MapView />
+            </section>
+
+            <section>
+               <SectionHeading
+                  title="Happy Customers"
+                  className="text-center lg:text-left"
+               >
+                  Read what our customers have to say about us
+               </SectionHeading>
+
+               <div className="grid md:grid-cols-2 gap-x-16 gap-y-16">
+                  <ReviewCard
+                     timestamp="2 May 2024"
+                     rating={4}
+                     customerName="Customer 1"
+                     customerPhotoUrl="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                  >
+                     Our stay at the hotel was amazing. The staff was friendly
+                     and the room was clean and comfortable.
+                  </ReviewCard>
+
+                  <ReviewCard
+                     timestamp="14 Apr 2024"
+                     rating={5}
+                     customerName="Customer 2"
+                     customerPhotoUrl="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                  >
+                     I highly recommend this hotel. The service was excellent
+                     and the location was perfect.
+                  </ReviewCard>
+               </div>
             </section>
          </section>
       </>

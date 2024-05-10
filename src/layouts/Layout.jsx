@@ -9,7 +9,7 @@ const Layout = () => {
          <Toaster />
          <Header />
 
-         <main>
+         <main className="my-8 sm:my-12 lg:my-16">
             <Outlet />
          </main>
 
