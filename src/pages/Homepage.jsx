@@ -1,4 +1,5 @@
 import Button from "@components/Button";
+import { Input } from "@components/Form";
 import MapView from "@containers/MapView";
 import ReviewCard from "@containers/ReviewCard";
 import SectionHeading from "@containers/SectionHeading";
@@ -67,6 +68,31 @@ const Homepage = () => {
                      and the location was perfect.
                   </ReviewCard>
                </div>
+            </section>
+
+            <section className="px-4 md:px-8 py-12 lg:py-16 grid justify-items-center bg-gray-100">
+               <SectionHeading
+                  title="Get Exclusive Updates and Offers"
+                  spacing="mb-10 sm:mb-12"
+               >
+                  Sign up for our newsletter to receive the latest updates,
+                  deals, and exclusive offers.
+               </SectionHeading>
+
+               <div className="w-full flex items-center gap-x-1 lg:gap-x-4 max-w-md">
+                  <Input className="w-full" placeholder="Enter your email" />
+                  <Button color="primary" className="lg:px-5 flex-shrink-0">
+                     Subscribe
+                  </Button>
+               </div>
+
+               <small className="mt-4 text-xs">
+                  By joining, you agree to our{" "}
+                  <span className="text-gray-800 font-semibold cursor-pointer">
+                     Terms and Conditions
+                  </span>
+                  .
+               </small>
             </section>
          </section>
       </>

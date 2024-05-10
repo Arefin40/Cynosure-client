@@ -1,7 +1,12 @@
-const SectionHeading = ({ title, children, className = "text-center" }) => {
+const SectionHeading = ({
+   title,
+   children,
+   className = "text-center",
+   spacing = "mb-16 sm:mb-20",
+}) => {
    return (
       <div
-         className={`mx-auto mb-16 sm:mb-20 max-w-2xl lg:max-w-none ${className}`}
+         className={`mx-auto max-w-2xl ${spacing} lg:max-w-none ${className}`}
       >
          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-gray-900">
             {title}
