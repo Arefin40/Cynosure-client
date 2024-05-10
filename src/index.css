@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.container {
+   @apply px-4 sm:px-6 lg:px-8 mx-auto max-w-[85rem];
+}
+
+.w-screen-extend {
+   @apply mx-[calc(-50vw+50%)] w-screen max-w-[100vw] overflow-hidden;
+}
+
+.bg-blur {
+   @apply bg-white backdrop-filter backdrop-blur-md bg-opacity-50;
+}

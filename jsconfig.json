@@ -1,0 +1,18 @@
+{
+   "compilerOptions": {
+      "baseUrl": ".",
+      "paths": {
+         "~/*": ["public/*"],
+         "@assets/*": ["src/assets/*"],
+         "@components/*": ["src/components/*"],
+         "@containers/*": ["src/containers/*"],
+         "@pages/*": ["src/pages/*"],
+         "@layouts/*": ["src/layouts/*"],
+         "@icons/*": ["src/icons/*"],
+         "@utils/*": ["src/utils/*"],
+         "@hooks/*": ["src/hooks/*"],
+         "@contexts/*": ["src/contexts/*"]
+      }
+   },
+   "exclude": ["node_modules", "dist"]
+}
