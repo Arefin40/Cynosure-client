@@ -1,11 +1,26 @@
-import Button from "@components/Button";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper/modules";
 import { Input } from "@components/Form";
+import { Arrow } from "@icons";
+import Button from "@components/Button";
+import FeaturedRoom from "@containers/FeaturedRoom";
 import MapView from "@containers/MapView";
 import ReviewCard from "@containers/ReviewCard";
 import SectionHeading from "@containers/SectionHeading";
 
 const Homepage = () => {
    document.title = "Cynosure";
+
+   const rooms = [
+      {
+         title: "Junior King Suite",
+         image: "https://i.ibb.co/1M829wK/junior-king.jpg",
+      },
+      {
+         title: "Junior Queen Suite",
+         image: "https://i.ibb.co/CPsPWCP/junior-queen.jpg",
+      },
+   ];
 
    return (
       <>
@@ -93,6 +108,51 @@ const Homepage = () => {
                   </span>
                   .
                </small>
+            </section>
+
+            <section className="overflow-hidden">
+               <div className="mb-16 sm:mb-20 flex items-center justify-between gap-y-6 flex-col lg:flex-row">
+                  <div className="max-w-2xl lg:max-w-none text-center lg:text-left">
+                     <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-gray-900">
+                        Featured Rooms
+                     </h1>
+                     <p className="mt-3 text-lg leading-8">
+                        Discover our hand-picked selection of luxury rooms.
+                     </p>
+                  </div>
+
+                  <div className="flex items-center gap-x-5">
+                     <button className="slide-button-prev w-14 h-14 rounded-full border-2 flex-shrink-0 flex items-center justify-center transform active:scale-90 transition-all">
+                        <Arrow direction="backward" />
+                     </button>
+                     <button className="slide-button-next w-14 h-14 rounded-full border-2 flex-shrink-0 flex items-center justify-center transform active:scale-90 transition-all">
+                        <Arrow direction="forward" />
+                     </button>
+                  </div>
+               </div>
+
+               <Swiper
+                  modules={[Navigation]}
+                  slidesPerView={1}
+                  spaceBetween={32}
+                  breakpoints={{
+                     1024: { slidesPerView: 2 },
+                  }}
+                  navigation={{
+                     nextEl: ".slide-button-next",
+                     prevEl: ".slide-button-prev",
+                  }}
+                  className="w-full"
+               >
+                  {rooms.map(({ title, image }) => (
+                     <SwiperSlide
+                        key={title}
+                        className="aspect-[3/2] rounded-xl overflow-hidden"
+                     >
+                        <FeaturedRoom title={title} image={image} />
+                     </SwiperSlide>
+                  ))}
+               </Swiper>
             </section>
          </section>
       </>

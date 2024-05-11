@@ -25,7 +25,7 @@ const ReviewCard = ({
 
             <div>
                <h2 className="text-gray-800 font-semibold">{customerName}</h2>
-               <time datetime="" className="text-sm">
+               <time dateTime="" className="text-sm">
                   {timestamp}
                </time>
             </div>

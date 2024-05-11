@@ -15,3 +15,7 @@ export { default as LogOut } from "./LogOut";
 export { default as Edit } from "./Edit";
 export { default as Delete } from "./Delete";
 export { default as Warning } from "./Warning";
+
+export { default as Area } from "./Area";
+export { default as Arrow } from "./Arrow";
+export { default as Bedroom } from "./Bedroom";

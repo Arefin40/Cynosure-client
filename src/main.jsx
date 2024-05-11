@@ -4,6 +4,9 @@ import RouterProvider from "@pages/RouterProvider";
 import AOS from "aos";
 
 import "aos/dist/aos.css";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
 import "leaflet/dist/leaflet.css";
 import "./index.css";
 
