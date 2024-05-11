@@ -3,7 +3,7 @@ import { Facebook, Twitter, Instagram, Github } from "@icons";
 
 export default () => {
    return (
-      <section className="px-5 lg:px-0 py-12 lg:py-24 mx-auto container grid gap-y-10 justify-items-center text-center text-gray-700">
+      <footer className="px-5 lg:px-0 py-12 lg:py-24 mx-auto container grid gap-y-10 justify-items-center text-center text-gray-700">
          <Link to="/">
             <h1 className="w-full text-2xl lg:text-3xl font-bold max-w-36 flex-shrink-0 text-primary-500">
                <span>Cynosure</span>
@@ -29,6 +29,6 @@ export default () => {
          <small className="text-gray-500">
             © 2024 Cynosure.com. All rights reserved.
          </small>
-      </section>
+      </footer>
    );
 };

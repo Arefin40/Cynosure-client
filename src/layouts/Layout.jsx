@@ -10,7 +10,9 @@ const Layout = () => {
          <Toaster />
          <Header />
 
-         <Outlet />
+         <main className="w-full min-h-[calc(100vh-28.75rem)] sm:min-h-[calc(100vh-23.125rem)] lg:min-h-[calc(100vh-30.625rem)]">
+            <Outlet />
+         </main>
 
          <Footer />
       </AuthProvider>
