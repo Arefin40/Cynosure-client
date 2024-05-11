@@ -1,5 +1,5 @@
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
+import { Navigation, Pagination } from "swiper/modules";
 import { Input } from "@components/Form";
 import { Arrow } from "@icons";
 import Button from "@components/Button";
@@ -24,6 +24,48 @@ const Homepage = () => {
 
    return (
       <>
+         <section className="relative mb-32 sm:mb-40 h-[44rem] overflow-hidden">
+            <Swiper
+               modules={[Pagination, Navigation]}
+               pagination={{ clickable: true }}
+               navigation={{
+                  nextEl: ".hero-slide-next",
+                  prevEl: ".hero-slide-prev",
+               }}
+            >
+               <SwiperSlide>
+                  <img
+                     src="https://i.ibb.co/XzpmbmC/hero-1.jpg"
+                     className="w-full h-full object-cover object-bottom"
+                  />
+               </SwiperSlide>
+
+               <SwiperSlide>
+                  <img
+                     src="https://i.ibb.co/4RyS8RQ/hero-2.jpg"
+                     className="w-full h-full object-cover object-bottom"
+                  />
+               </SwiperSlide>
+
+               <SwiperSlide>
+                  <img
+                     src="https://i.ibb.co/BtSC3K3/hero-3.jpg"
+                     className="w-full h-full object-cover object-bottom"
+                  />
+               </SwiperSlide>
+            </Swiper>
+
+            <div className="px-4 w-full absolute top-1/2 flex items-center justify-between gap-x-5 -translate-y-1/2 z-20">
+               <button className="hero-slide-prev w-14 h-14 rounded-full flex-shrink-0 flex items-center justify-center transform active:scale-90 transition-all bg-blur !bg-opacity-30 text-primary-400">
+                  <Arrow direction="backward" />
+               </button>
+
+               <button className="hero-slide-next w-14 h-14 rounded-full flex-shrink-0 flex items-center justify-center transform active:scale-90 transition-all bg-blur !bg-opacity-30 text-primary-400">
+                  <Arrow direction="forward" />
+               </button>
+            </div>
+         </section>
+
          <section className="container grid gap-y-32 sm:gap-y-40">
             <section className="grid lg:grid-cols-2 gap-x-16 gap-y-10">
                <div>
