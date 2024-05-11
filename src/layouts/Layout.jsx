@@ -2,6 +2,7 @@ import Header from "@containers/Header";
 import { Outlet } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "@contexts/AuthContext";
+import Footer from "@containers/Footer";
 
 const Layout = () => {
    return (
@@ -9,11 +10,9 @@ const Layout = () => {
          <Toaster />
          <Header />
 
-         <main className="my-8 sm:my-12 lg:my-16">
-            <Outlet />
-         </main>
+         <Outlet />
 
-         <div className="py-12 flex justify-center border">Footer</div>
+         <Footer />
       </AuthProvider>
    );
 };

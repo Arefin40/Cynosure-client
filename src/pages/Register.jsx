@@ -11,7 +11,7 @@ import {
 } from "@utils/ValidationSchema";
 
 export default () => {
-   document.title = "Artisan  |  Sign up";
+   document.title = "Cynosure  |  Sign up";
    const [showPassword, setShowPassword] = useState(false);
    const { createAccount } = useAuth();
    const nevigate = useNavigate();

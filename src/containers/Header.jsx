@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useBoolean } from "@hooks";
 import { useAuth } from "@contexts/AuthContext";
 import Drawer from "@components/Drawer";
@@ -37,9 +37,11 @@ export default () => {
    return (
       <header className="w-full sticky inset-x-0 top-0 z-40 bg-white border-b">
          <section className="px-5 sm:px-8 h-16 lg:h-auto lg:py-5 mx-auto container flex items-center justify-between">
-            <h1 className="w-full text-2xl lg:text-3xl font-bold max-w-36 flex-shrink-0 text-primary-500">
-               <span>Cynosure</span>
-            </h1>
+            <Link to="/">
+               <h1 className="w-full text-2xl lg:text-3xl font-bold max-w-36 flex-shrink-0 text-primary-500">
+                  <span>Cynosure</span>
+               </h1>
+            </Link>
 
             <Drawer
                open={active}

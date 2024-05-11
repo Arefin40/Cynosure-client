@@ -12,7 +12,7 @@ import {
 import Github from "@icons/Github";
 
 export default () => {
-   document.title = "Artisan  |  Sign in";
+   document.title = "Cynosure  |  Sign in";
    const { signInWithEmail, signInWithProvider } = useAuth();
    const [showPassword, setShowPassword] = useState(false);
    const location = useLocation();
