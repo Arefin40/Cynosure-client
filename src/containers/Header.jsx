@@ -1,5 +1,5 @@
 import { Link, NavLink } from "react-router-dom";
-import { useBoolean } from "@hooks";
+import { useVisibility } from "@hooks";
 import { useAuth } from "@contexts/AuthContext";
 import Drawer from "@components/Drawer";
 import Button from "@components/Button";
@@ -32,7 +32,7 @@ const navigations = [
 
 export default () => {
    const { user } = useAuth();
-   const { active, open, close } = useBoolean(false);
+   const { isVisible, toggle, hide } = useVisibility(false);
 
    return (
       <header className="w-full sticky inset-x-0 top-0 z-40 bg-white border-b">
@@ -44,8 +44,8 @@ export default () => {
             </Link>
 
             <Drawer
-               open={active}
-               onClose={close}
+               open={isVisible}
+               onClose={hide}
                className="top-16 lg:static flex flex-col lg:flex-row lg:items-center lg:justify-center lg:w-full lg:max-w-none lg:translate-x-0 border-t lg:border-0"
             >
                <ul className="p-6 lg:p-0 text-base grid lg:flex lg:justify-center items-center gap-x-12 gap-y-6 font-medium text-gray-700">
@@ -56,7 +56,7 @@ export default () => {
                               end
                               to={path}
                               key={path}
-                              onClick={close}
+                              onClick={hide}
                               className={({ isActive }) =>
                                  isActive ? "text-primary-500" : ""
                               }
@@ -83,7 +83,7 @@ export default () => {
                </div>
             </Drawer>
 
-            <UserMenu onClickButton={open} />
+            <UserMenu onClickButton={toggle} />
          </section>
       </header>
    );

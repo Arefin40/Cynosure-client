@@ -1,2 +1,3 @@
-export { default as useBoolean } from "./useBoolean";
+export { default as useVisibility } from "./useVisibility";
 export { default as useDropdown } from "./useDropdown";
+export { default as useModal } from "./useModal";

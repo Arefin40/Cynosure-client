@@ -75,7 +75,7 @@ const TriggerButton = ({ onClick, userData, className = "flex" }) => {
 
 export default ({ onClickButton }) => {
    const { user, signOut } = useAuth();
-   const { ref, isVisible, hide, toggleVisibility } = useDropdown();
+   const { ref, isVisible, hide, toggle } = useDropdown();
 
    return (
       <div
@@ -89,7 +89,7 @@ export default ({ onClickButton }) => {
          />
 
          <TriggerButton
-            onClick={toggleVisibility}
+            onClick={toggle}
             userData={user}
             className="hidden lg:flex"
          />

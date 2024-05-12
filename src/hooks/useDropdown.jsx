@@ -1,15 +1,12 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useEffect } from "react";
+import useVisibility from "@hooks/useVisibility";
 
-const useOutsideClickDetector = (callback, initialState = false) => {
-   const targetRef = useRef(null);
-   const [isVisible, setIsVisible] = useState(initialState);
-
-   const toggleVisibility = () => setIsVisible((prev) => !prev);
-   const show = () => setIsVisible(true);
-   const hide = () => setIsVisible(false);
+const useDropdown = (callback, initialState = false) => {
+   const ref = useRef(null);
+   const { isVisible, show, hide, toggle } = useVisibility(initialState);
 
    const handleClickOutside = (e) => {
-      if (targetRef?.current && !targetRef.current.contains(e.target)) {
+      if (ref?.current && !ref.current.contains(e.target)) {
          hide();
          callback && callback();
       }
@@ -25,6 +22,6 @@ const useOutsideClickDetector = (callback, initialState = false) => {
       };
    }, [isVisible]);
 
-   return { ref: targetRef, isVisible, show, hide, toggleVisibility };
+   return { ref, isVisible, show, hide, toggle };
 };
-export default useOutsideClickDetector;
+export default useDropdown;
