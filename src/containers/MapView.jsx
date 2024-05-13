@@ -7,7 +7,7 @@ const MapView = () => {
          center={position}
          zoom={13}
          scrollWheelZoom={false}
-         className="w-full min-h-32 aspect-video lg:aspect-auto border"
+         className="w-full aspect-video lg:aspect-[3/2] border"
       >
          <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

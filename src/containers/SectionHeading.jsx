@@ -2,7 +2,7 @@ const SectionHeading = ({
    title,
    children,
    className = "text-center",
-   spacing = "mb-16 sm:mb-20",
+   spacing = "mb-10 sm:mb-12",
 }) => {
    return (
       <div

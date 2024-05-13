@@ -15,7 +15,7 @@ const FeaturedRoom = ({ title, image }) => {
                   <h3>2 Guests</h3>
                </div>
 
-               <div className="border-gray-400 flex items-center gap-x-2 rounded-2xl overflow-hidden">
+               <div className="flex items-center gap-x-2">
                   <Area />
                   <h3>460 SQ FT</h3>
                </div>

@@ -5,7 +5,7 @@ import { Arrow } from "@icons";
 import Button from "@components/Button";
 import FeaturedRoom from "@containers/FeaturedRoom";
 import MapView from "@containers/MapView";
-import ReviewCard from "@containers/ReviewCard";
+import Review from "@containers/Review";
 import SectionHeading from "@containers/SectionHeading";
 
 const Homepage = () => {
@@ -69,12 +69,12 @@ const Homepage = () => {
             </div>
          </section>
 
-         <section className="container grid gap-y-32 sm:gap-y-40">
-            <section className="grid lg:grid-cols-2 gap-x-16 gap-y-10">
+         <section className="container space-y-32 sm:space-y-40">
+            <section className="grid lg:grid-cols-2 gap-x-16 gap-y-10 items-center">
                <div>
                   <h4 className="text-gray-800 font-medium">Discover</h4>
 
-                  <h1 className="mt-2 mb-3 text-3xl sm:text-4xl text-gray-800 font-extrabold leading-snug">
+                  <h1 className="mt-3 mb-5 text-3xl sm:text-4xl text-gray-800 font-extrabold leading-snug">
                      Explore Our Hotel and Nearby Attractions
                   </h1>
 
@@ -97,62 +97,6 @@ const Homepage = () => {
                </div>
 
                <MapView />
-            </section>
-
-            <section>
-               <SectionHeading
-                  title="Happy Customers"
-                  className="text-center lg:text-left"
-               >
-                  Read what our customers have to say about us
-               </SectionHeading>
-
-               <div className="grid md:grid-cols-2 gap-x-16 gap-y-16">
-                  <ReviewCard
-                     timestamp="2 May 2024"
-                     rating={4}
-                     customerName="Customer 1"
-                     customerPhotoUrl="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                  >
-                     Our stay at the hotel was amazing. The staff was friendly
-                     and the room was clean and comfortable.
-                  </ReviewCard>
-
-                  <ReviewCard
-                     timestamp="14 Apr 2024"
-                     rating={5}
-                     customerName="Customer 2"
-                     customerPhotoUrl="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                  >
-                     I highly recommend this hotel. The service was excellent
-                     and the location was perfect.
-                  </ReviewCard>
-               </div>
-            </section>
-
-            <section className="px-4 md:px-8 py-12 lg:py-16 grid justify-items-center bg-gray-100">
-               <SectionHeading
-                  title="Get Exclusive Updates and Offers"
-                  spacing="mb-10 sm:mb-12"
-               >
-                  Sign up for our newsletter to receive the latest updates,
-                  deals, and exclusive offers.
-               </SectionHeading>
-
-               <div className="w-full flex items-center gap-x-1 lg:gap-x-4 max-w-md">
-                  <Input className="w-full" placeholder="Enter your email" />
-                  <Button color="primary" className="lg:px-5 flex-shrink-0">
-                     Subscribe
-                  </Button>
-               </div>
-
-               <small className="mt-4 text-xs">
-                  By joining, you agree to our{" "}
-                  <span className="text-gray-800 font-semibold cursor-pointer">
-                     Terms and Conditions
-                  </span>
-                  .
-               </small>
             </section>
 
             <section className="overflow-hidden">
@@ -198,6 +142,88 @@ const Homepage = () => {
                      </SwiperSlide>
                   ))}
                </Swiper>
+            </section>
+
+            <section>
+               <SectionHeading
+                  title="Happy Customers"
+                  className="text-center lg:text-left"
+               >
+                  Read what our customers have to say about us
+               </SectionHeading>
+
+               <div className="relative space-y-2 w-full">
+                  <Swiper
+                     modules={[Navigation]}
+                     slidesPerView={1}
+                     spaceBetween={16}
+                     breakpoints={{
+                        1280: { slidesPerView: 3 },
+                        768: { slidesPerView: 2 },
+                     }}
+                     navigation={{
+                        nextEl: ".review-slide-next",
+                        prevEl: ".review-slide-prev",
+                     }}
+                  >
+                     <SwiperSlide className="h-auto">
+                        <Review>
+                           Lorem ipsum dolor, sit amet consectetur adipisicing
+                           elit. Tempora eum aliquid consectetur excepturi,
+                           reiciendis quibusdam minus dolores doloribus aliquam
+                           assumenda.
+                        </Review>
+                     </SwiperSlide>
+
+                     <SwiperSlide className="h-auto">
+                        <Review>
+                           Lorem ipsum dolor, sit amet consectetur adipisicing
+                           elit. Tempora eum aliquid consectetur.
+                        </Review>
+                     </SwiperSlide>
+
+                     <SwiperSlide className="h-auto">
+                        <Review>
+                           Lorem ipsum dolor, sit amet consectetur adipisicing
+                           elit. Tempora eum aliquid consectetur excepturi,
+                           reiciendis quibusdam minus dolores doloribus aliquam
+                           assumenda.
+                        </Review>
+                     </SwiperSlide>
+                  </Swiper>
+
+                  <div className="w-full flex items-center justify-center gap-x-5">
+                     <button className="review-slide-prev w-10 h-10 lg:w-12 lg:h-12 rounded-full flex-shrink-0 flex items-center justify-center transform active:scale-90 transition-all bg-white shadow-md border border-gray-100 text-primary-400">
+                        <Arrow direction="backward" />
+                     </button>
+
+                     <button className="review-slide-next w-10 h-10 lg:w-12 lg:h-12 rounded-full flex-shrink-0 flex items-center justify-center transform active:scale-90 transition-all bg-white shadow-md border border-gray-100 text-primary-400">
+                        <Arrow direction="forward" />
+                     </button>
+                  </div>
+               </div>
+            </section>
+
+            <section className="px-4 md:px-8 py-12 lg:py-16 grid justify-items-center bg-gray-100">
+               <SectionHeading title="Get Exclusive Updates and Offers">
+                  Sign up for our newsletter to receive the latest updates,
+                  deals, and exclusive offers.
+               </SectionHeading>
+
+               <div className="w-full flex items-center gap-x-1 lg:gap-x-4 max-w-md">
+                  <Input className="w-full" placeholder="Enter your email" />
+                  <Button color="primary" className="lg:px-5 flex-shrink-0">
+                     Subscribe
+                  </Button>
+               </div>
+
+               <small className="mt-4 text-xs">
+                  By joining, you agree to our{" "}
+                  <span className="text-gray-800 font-semibold cursor-pointer">
+                     Terms and Conditions
+                  </span>
+                  .
+               </small>
             </section>
          </section>
       </>
