@@ -4,16 +4,16 @@ import { Message } from "@icons";
 import StarRating from "@containers/StarRating";
 import ReviewFormModal from "@containers/ReviewFormModal";
 
-const RoomCard = () => {
+const RoomCard = ({ room }) => {
    const [isModalOpen, setIsModalOpen] = useState(false);
 
    return (
       <>
          <div className="isolate">
             <div className="relative">
-               <Link to="/room/200">
+               <Link to={`/rooms/${room?._id}`}>
                   <img
-                     src="https://i.ibb.co/1M829wK/junior-king.jpg"
+                     src={room?.images[0]}
                      className="aspect-[3/2] sm:aspect-square lg:aspect-[3/2] object-cover rounded-xl border"
                   />
                </Link>
@@ -27,34 +27,34 @@ const RoomCard = () => {
                </button>
             </div>
 
-            <div className="mt-5 flex items-center gap-x-2">
-               <Link to="/room/200">
-                  <h1 className="text-lg font-semibold text-gray-800">
-                     Superior King Suite
-                  </h1>
-               </Link>
+            <div className="mt-5 flex justify-between gap-x-2">
+               <div className="grid gap-y-1">
+                  <Link to={`/rooms/${room?._id}`}>
+                     <h1 className="text-lg font-semibold text-gray-800">
+                        {room?.roomType}
+                     </h1>
+                  </Link>
 
-               <h4 className="text-xs px-3 py-1 rounded-full bg-primary-200 text-gray-800 font-semibold backdrop-blur-md bg-opacity-30">
-                  Unavailable
-               </h4>
-            </div>
+                  <div className="flex items-center gap-x-2 text-sm">
+                     <StarRating rating={room?.rating} />
+                     <h4 className="text-gray-800">
+                        {room?.totalReviews} reviews
+                     </h4>
+                  </div>
+               </div>
 
-            <div className="mt-1 flex items-center gap-x-2 text-sm">
-               <StarRating rating={4} />
-               <p>
-                  (<span className="text-gray-800">24 reviews</span>)
-               </p>
-            </div>
+               <div className="grid content-center">
+                  <h4 className="flex gap-x-1 items-center">
+                     <span className="text-lg font-semibold text-primary-500">
+                        ${room?.price}
+                     </span>
+                     <span>/ night</span>
+                  </h4>
 
-            <div className="mt-3 flex gap-x-3 items-center">
-               <span className="line-through font-medium">$720</span>
-
-               <h4 className="flex gap-x-1 items-center">
-                  <span className="text-lg font-semibold text-primary-500">
-                     $580
-                  </span>
-                  <span>/ night</span>
-               </h4>
+                  <h4 className="text-sm text-primary-500 text-center font-semibold">
+                     Not Available
+                  </h4>
+               </div>
             </div>
          </div>
 
