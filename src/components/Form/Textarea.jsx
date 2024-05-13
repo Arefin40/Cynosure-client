@@ -50,9 +50,9 @@ export default forwardRef(
                className={`block p-3 w-full text-sm text-gray-900 rounded-md border border-gray-300 outline-none focus:ring-2 shadow-sm ${textareaClass}`}
             ></textarea>
 
-            {errors?.["description"] && (
+            {errors?.[name] && (
                <span className="text-sm text-rose-500">
-                  {errors["description"].message}
+                  {errors[name].message}
                </span>
             )}
          </div>

@@ -3,7 +3,16 @@ import classNames from "@utils/classNames";
 
 export default forwardRef(
    (
-      { label, name, defaultValue = "-", options, errors, onChange, onBlur },
+      {
+         label,
+         name,
+         defaultValue = "-",
+         className = "grid gap-y-2",
+         options,
+         errors,
+         onChange,
+         onBlur,
+      },
       ref
    ) => {
       const errorClass = classNames({
@@ -13,7 +22,7 @@ export default forwardRef(
       });
 
       return (
-         <div className="grid gap-y-2">
+         <div className={className}>
             <label
                htmlFor={name}
                className="text-sm font-semibold text-gray-900"
