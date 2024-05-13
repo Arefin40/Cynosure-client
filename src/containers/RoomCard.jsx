@@ -11,7 +11,7 @@ const RoomCard = () => {
       <>
          <div className="isolate">
             <div className="relative">
-               <Link to="/room">
+               <Link to="/room/200">
                   <img
                      src="https://i.ibb.co/1M829wK/junior-king.jpg"
                      className="aspect-[3/2] sm:aspect-square lg:aspect-[3/2] object-cover rounded-xl border"
@@ -28,7 +28,7 @@ const RoomCard = () => {
             </div>
 
             <div className="mt-5 flex items-center gap-x-2">
-               <Link to="/room">
+               <Link to="/room/200">
                   <h1 className="text-lg font-semibold text-gray-800">
                      Superior King Suite
                   </h1>

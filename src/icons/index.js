@@ -19,4 +19,5 @@ export { default as Warning } from "./Warning";
 export { default as Area } from "./Area";
 export { default as Arrow } from "./Arrow";
 export { default as Bedroom } from "./Bedroom";
+export { default as Calendar } from "./Calendar";
 export { default as Message } from "./Message";
