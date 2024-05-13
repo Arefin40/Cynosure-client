@@ -18,6 +18,15 @@
    @apply bg-black backdrop-filter backdrop-blur-md bg-opacity-20;
 }
 
+.rating .star {
+   @apply text-gray-300;
+}
+
+.rating:has(:checked) .star,
+.rating:has(:checked) ~ .rating .star {
+   @apply text-primary-500;
+}
+
 .leaflet-control {
    z-index: 0 !important;
 }

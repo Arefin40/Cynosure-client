@@ -4,6 +4,7 @@ import ErrorPage from "@pages/ErrorPage";
 import Register from "@pages/Register";
 import Login from "@pages/Login";
 import Homepage from "@pages/Homepage";
+import Rooms from "@pages/Rooms";
 import Contact from "@pages/Contact";
 
 const router = createBrowserRouter([
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
          {
             path: "/",
             element: <Homepage />,
+         },
+         {
+            path: "/rooms",
+            element: <Rooms />,
          },
          {
             path: "/contact",
