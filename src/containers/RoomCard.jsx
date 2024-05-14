@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Message } from "@icons";
+import { Message, Star } from "@icons";
 import StarRating from "@containers/StarRating";
 import ReviewFormModal from "@containers/ReviewFormModal";
 
@@ -27,13 +27,22 @@ const RoomCard = ({ room }) => {
                </button>
             </div>
 
-            <div className="mt-5 flex justify-between gap-x-2">
+            <div className="mt-5 flex justify-between gap-x-2 flex-wrap">
                <div className="grid gap-y-1">
-                  <Link to={`/rooms/${room?._id}`}>
-                     <h1 className="text-lg font-semibold text-gray-800">
-                        {room?.roomType}
-                     </h1>
-                  </Link>
+                  <div className="flex items-center gap-x-2">
+                     <Link to={`/rooms/${room?._id}`}>
+                        <h1 className="text-lg font-semibold text-gray-800">
+                           {room?.roomType}
+                        </h1>
+                     </Link>
+
+                     {room?.specialOffer !== "nil" && (
+                        <div className="px-2 py-1 flex items-center gap-x-1 rounded bg-primary-500 text-white text-xs">
+                           <Star className="w-3 h-3" />
+                           Best Deal
+                        </div>
+                     )}
+                  </div>
 
                   <div className="flex items-center gap-x-2 text-sm">
                      <StarRating rating={room?.rating} />
@@ -51,9 +60,11 @@ const RoomCard = ({ room }) => {
                      <span>/ night</span>
                   </h4>
 
-                  <h4 className="text-sm text-primary-500 text-center font-semibold">
-                     Not Available
-                  </h4>
+                  {room?.bookingId !== "nil" && (
+                     <h4 className="text-sm text-primary-500 text-center font-semibold">
+                        Not Available
+                     </h4>
+                  )}
                </div>
             </div>
          </div>
