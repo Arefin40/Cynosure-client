@@ -6,8 +6,17 @@ import { Arrow } from "@icons";
 import Review from "@containers/Review";
 import ReviewFormModal from "@containers/ReviewFormModal";
 
-const ReviewSection = () => {
+const ReviewSection = ({ rating = 0, reviews = [] }) => {
    const [isModalOpen, setIsModalOpen] = useState(false);
+
+   let remark = "";
+
+   if (reviews.length === 0) remark = "No reviews";
+   else if (rating < 1) remark = "Very Bad";
+   else if (rating < 2) remark = "Not Good";
+   else if (rating < 3) remark = "Average";
+   else if (rating < 3) remark = "Good";
+   else if (rating >= 4) remark = "Very Good";
 
    return (
       <>
@@ -23,13 +32,13 @@ const ReviewSection = () => {
             <div className="flex items-center justify-between gap-y-4 flex-wrap">
                <div className="flex items-center gap-x-2 font-semibold text-lg">
                   <h2 className="px-2 py-0.5 rounded bg-primary-500 text-white">
-                     4.5
+                     {rating}
                   </h2>
-                  <h4 className="text-gray-800">Very Good</h4>·
+                  <h4 className="text-gray-800">{remark}</h4>·
                   <p className="font-normal text-base space-x-1">
                      <span>Based on:</span>
                      <span className="text-gray-800 font-medium">
-                        24 reviews
+                        {reviews.length} reviews
                      </span>
                   </p>
                </div>
@@ -68,30 +77,41 @@ const ReviewSection = () => {
                      prevEl: ".review-slide-prev",
                   }}
                >
-                  <SwiperSlide className="h-auto">
-                     <Review>
-                        Lorem ipsum dolor, sit amet consectetur adipisicing
-                        elit. Tempora eum aliquid consectetur excepturi,
-                        reiciendis quibusdam minus dolores doloribus aliquam
-                        assumenda.
-                     </Review>
-                  </SwiperSlide>
+                  {reviews.length > 0 ? (
+                     <>
+                        <SwiperSlide className="h-auto">
+                           <Review>
+                              Lorem ipsum dolor, sit amet consectetur
+                              adipisicing elit. Tempora eum aliquid consectetur
+                              excepturi, reiciendis quibusdam minus dolores
+                              doloribus aliquam assumenda.
+                           </Review>
+                        </SwiperSlide>
 
-                  <SwiperSlide className="h-auto">
-                     <Review>
-                        Lorem ipsum dolor, sit amet consectetur adipisicing
-                        elit. Tempora eum aliquid consectetur.
-                     </Review>
-                  </SwiperSlide>
+                        <SwiperSlide className="h-auto">
+                           <Review>
+                              Lorem ipsum dolor, sit amet consectetur
+                              adipisicing elit. Tempora eum aliquid consectetur.
+                           </Review>
+                        </SwiperSlide>
 
-                  <SwiperSlide className="h-auto">
-                     <Review>
-                        Lorem ipsum dolor, sit amet consectetur adipisicing
-                        elit. Tempora eum aliquid consectetur excepturi,
-                        reiciendis quibusdam minus dolores doloribus aliquam
-                        assumenda.
-                     </Review>
-                  </SwiperSlide>
+                        <SwiperSlide className="h-auto">
+                           <Review>
+                              Lorem ipsum dolor, sit amet consectetur
+                              adipisicing elit. Tempora eum aliquid consectetur
+                              excepturi, reiciendis quibusdam minus dolores
+                              doloribus aliquam assumenda.
+                           </Review>
+                        </SwiperSlide>
+                     </>
+                  ) : (
+                     Array.from({ length: 3 }).map((_, i) => (
+                        <SwiperSlide key={i} className="grid gap-y-2">
+                           <header className="h-6 w-4/5 bg-gray-100 rounded justify-self-start" />
+                           <main className="h-32 w-full bg-gray-100 rounded" />
+                        </SwiperSlide>
+                     ))
+                  )}
                </Swiper>
 
                <div className="w-full flex items-center justify-center gap-x-5">

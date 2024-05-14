@@ -21,3 +21,5 @@ export { default as Arrow } from "./Arrow";
 export { default as Bedroom } from "./Bedroom";
 export { default as Calendar } from "./Calendar";
 export { default as Message } from "./Message";
+export { default as Share } from "./Share";
+export { default as Love } from "./Love";

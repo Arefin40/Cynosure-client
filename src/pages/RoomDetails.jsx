@@ -1,115 +1,212 @@
-import { Area, Calendar } from "@icons";
-import { Input } from "@components/Form";
+import { useState } from "react";
+import { useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { Area, Love, Share } from "@icons";
+import { DatePicker } from "@components/Form";
+import axios from "@hooks/axios";
 import Button from "@components/Button";
 import StarRating from "@containers/StarRating";
 import ReviewSection from "@containers/ReviewSection";
+import LoadingState from "@components/LoadingState";
+import { dateDifferenceInDays } from "@utils/DateTime";
+import BookingConfirmationModal from "@containers/BookingConfirmationModal";
 
 const RoomDetails = () => {
+   const [isModalOpen, setIsModalOpen] = useState(false);
+   const [checkInDate, setCheckInDate] = useState();
+   const [checkOutDate, setCheckOutDate] = useState();
+   const [images, setImages] = useState([]);
+
+   const { id } = useParams();
+   const { data: room = {}, isLoading } = useQuery({
+      queryFn: async () => {
+         const { data } = await axios.get(`/rooms/${id}`, {
+            withCredentials: true,
+         });
+         setImages(data?.images);
+         return data;
+      },
+      queryKey: ["room", id],
+   });
+
+   if (isLoading) return <LoadingState />;
+
+   const rotateBy = (index) => {
+      if (images.length < 3) return;
+      if (index === 0) setImages([images[0], images[1], images[2]]);
+      else if (index === 1) setImages([images[1], images[2], images[0]]);
+      else if (index === 2) setImages([images[2], images[0], images[1]]);
+   };
+
+   const getPrice = () => {
+      return room.price * dateDifferenceInDays(checkOutDate, checkInDate);
+   };
+
+   const getMinDate = (increamentBy) => {
+      let minDate = new Date();
+      minDate.setDate(minDate.getDate() + increamentBy);
+      return minDate;
+   };
+
    return (
-      <section className="container mt-4 lg:mt-8 space-y-5 md:space-y-8">
-         <section className="w-full grid lg:flex gap-2 sm:gap-4">
-            <div className="rounded-xl w-full aspect-[5/3] overflow-hidden">
-               <img
-                  src="https://i.ibb.co/1M829wK/junior-king.jpg"
-                  className="w-full h-full object-cover"
-               />
-            </div>
-
-            <div className="lg:w-96 flex lg:grid gap-2 sm:gap-4 flex-shrink-0">
-               <div className="rounded-xl w-full h-full overflow-hidden">
-                  <img
-                     src="https://i.ibb.co/1M829wK/junior-king.jpg"
-                     className="max-w-full max-h-full object-cover aspect-video lg:aspect-auto"
-                  />
+      <>
+         <section className="container mt-4 lg:mt-8 space-y-5 md:space-y-8">
+            <section className="w-full lg:h-[33.75rem] grid lg:grid-cols-[1fr_24rem] gap-2 sm:gap-4">
+               <div
+                  onClick={() => rotateBy(0)}
+                  className="max-w-full max-h-full rounded-xl overflow-hidden"
+               >
+                  <img src={images[0]} className="w-full h-full object-cover" />
                </div>
-               <div className="rounded-xl w-full h-full overflow-hidden">
-                  <img
-                     src="https://i.ibb.co/1M829wK/junior-king.jpg"
-                     className="max-w-full max-h-full object-cover aspect-video lg:aspect-auto"
-                  />
+
+               <div className="max-h-full grid grid-cols-2 lg:grid-cols-1 lg:grid-rows-2 gap-2 sm:gap-4 flex-shrink-0">
+                  <div
+                     onClick={() => rotateBy(1)}
+                     className="rounded-xl w-full h-full overflow-hidden"
+                  >
+                     <img
+                        src={images[1]}
+                        className="w-full h-full object-cover aspect-video lg:aspect-auto"
+                     />
+                  </div>
+                  <div
+                     onClick={() => rotateBy(2)}
+                     className="rounded-xl w-full h-full overflow-hidden"
+                  >
+                     <img
+                        src={images[2]}
+                        className="w-full h-full object-cover aspect-video lg:aspect-auto"
+                     />
+                  </div>
                </div>
-            </div>
-         </section>
+            </section>
 
-         <section className="grid gap-5 md:gap-8 md:grid-cols-[1fr_22rem] items-start">
-            <div className="space-y-4">
-               <div className="flex items-center gap-5 justify-between flex-wrap">
-                  <div className="space-y-4">
-                     <h1 className="text-xl sm:text-2xl font-bold text-gray-900">
-                        Superior King Room
-                     </h1>
-
-                     <div className="flex items-center gap-x-5">
-                        <div className="flex items-center gap-x-2 text-sm">
-                           <StarRating rating={4} />
-                           <span>(24 reviews)</span>
+            <section className="grid gap-5 md:gap-8 md:grid-cols-[1fr_22rem] items-start">
+               <div className="space-y-4">
+                  {room?.specialOffer !== "nil" && (
+                     <div className="p-4 rounded-lg bg-discount-pattern text-white uppercase">
+                        <div className="flex gap-x-10 gap-y-1 justify-center flex-wrap">
+                           {room.specialOffer.packages.map((_package, i) => (
+                              <div
+                                 key={i}
+                                 className="flex items-center gap-x-2"
+                              >
+                                 <h2 className="text-lg font-bold">
+                                    {_package.discount}% OFF
+                                 </h2>
+                                 <p>Stay {_package.conditions.nights} nights</p>
+                              </div>
+                           ))}
                         </div>
+                     </div>
+                  )}
 
-                        <div className="flex items-center gap-x-2">
-                           <Area />
-                           <span>460 Sq.ft.</span>
+                  <div className="flex items-center gap-5 justify-between flex-wrap">
+                     <div className="space-y-4">
+                        <h1 className="text-xl sm:text-2xl font-bold text-gray-900">
+                           {room?.roomType}
+                        </h1>
+
+                        <div className="flex items-center gap-x-5">
+                           <div className="flex items-center gap-x-2 text-sm">
+                              <StarRating rating={room?.rating} />
+                              <span>({room?.totalReviews} reviews)</span>
+                           </div>
+
+                           <div className="flex items-center gap-x-2">
+                              <Area />
+                              <span>{room?.size} Sq.ft.</span>
+                           </div>
                         </div>
+                     </div>
+
+                     <div className="flex items-center justify-center gap-x-2 flex-shrink-0">
+                        <Button rounded variant="outlined" startIcon={<Love />}>
+                           Save
+                        </Button>
+                        <Button
+                           rounded
+                           variant="outlined"
+                           startIcon={<Share />}
+                        >
+                           Share
+                        </Button>
                      </div>
                   </div>
 
-                  <div className="w-full min-h-12 max-w-96 bg-gray-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                     offers
+                  <div className="mt-2 py-3 sm:py-4 flex items-center gap-x-12 text-sm sm:text-base font-semibold border-y">
+                     <span>Status:</span>
+                     <span className="text-gray-800">
+                        {room?.bookingStatus === "available"
+                           ? "Available for booking"
+                           : "Currently under booking"}
+                     </span>
                   </div>
                </div>
 
-               <div className="mt-2 py-3 sm:py-4 flex items-center gap-x-12 text-sm sm:text-base font-semibold border-y">
-                  <span>Unavailable Until:</span>
-                  <span className="text-gray-800">12 May 2024</span>
-               </div>
-            </div>
+               <div className="p-4 grid gap-y-2 rounded-xl border shadow-sm">
+                  <div className="mb-2 flex items-center gap-x-1">
+                     <h2 className="text-2xl font-semibold text-gray-800">
+                        ${room?.price}
+                     </h2>
+                     <span>/ night</span>
+                  </div>
 
-            <div className="p-4 grid gap-y-2 rounded-xl border shadow-sm">
-               <div className="mb-2 flex items-center gap-x-1">
-                  <h2 className="text-2xl font-semibold text-gray-800">$580</h2>
-                  <span>/ night</span>
-               </div>
+                  <div className="grid grid-cols-[repeat(auto-fit,minmax(12rem,1fr))] items-center gap-2">
+                     <DatePicker
+                        label="Check-in"
+                        className="w-full"
+                        value={checkInDate}
+                        minDate={getMinDate(1)}
+                        onChange={(date) => setCheckInDate(date)}
+                     />
+                     <DatePicker
+                        label="Check-out"
+                        className="w-full"
+                        value={checkOutDate}
+                        minDate={getMinDate(2)}
+                        onChange={(date) => setCheckOutDate(date)}
+                     />
+                  </div>
 
-               <div className="grid grid-cols-[repeat(auto-fit,minmax(9.625rem,1fr))] items-center gap-2">
-                  <Input
-                     label="Check-in"
-                     startIcon={<Calendar />}
-                     placeholder="DD/MM/YYYY"
-                     className="w-full"
-                  />
-                  <Input
-                     label="Check-out"
-                     startIcon={<Calendar />}
-                     placeholder="DD/MM/YYYY"
-                     className="w-full"
-                  />
+                  <Button
+                     color="primary"
+                     onClick={() => setIsModalOpen(true)}
+                     disabled={
+                        room?.bookingStatus !== "available" ||
+                        !checkInDate ||
+                        !checkOutDate
+                     }
+                     className="w-full max-w-64 md:max-w-none justify-self-center"
+                  >
+                     Reserve
+                  </Button>
                </div>
+            </section>
 
-               <Button
-                  color="primary"
-                  className="w-full max-w-64 md:max-w-none justify-self-center"
-               >
-                  Reserve
-               </Button>
-            </div>
+            <section className="space-y-3 sm:space-y-4 leading-7">
+               <h2 className="text-lg sm:text-xl text-gray-800 font-semibold sm:font-bold">
+                  Description
+               </h2>
+               <p>{room?.description}</p>
+            </section>
+
+            <ReviewSection />
          </section>
 
-         <section className="space-y-3 sm:space-y-4 leading-7">
-            <h2 className="text-lg sm:text-xl text-gray-800 font-semibold sm:font-bold">
-               Description
-            </h2>
-            <p>
-               Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil,
-               possimus at exercitationem consequuntur quas ipsam voluptate
-               dolores facere corrupti quaerat commodi id molestiae? Vitae
-               expedita ex, dolores alias exercitationem excepturi sed minima
-               sapiente minus molestiae placeat optio autem fugit, beatae quasi.
-               Eaque cum commodi nulla facilis necessitatibus cumque, magnam
-               vitae?
-            </p>
-         </section>
-
-         <ReviewSection />
-      </section>
+         {isModalOpen && (
+            <BookingConfirmationModal
+               isModalOpen={isModalOpen}
+               roomImage={room.images[0]}
+               roomType={room.roomType}
+               roomPrice={room.price}
+               checkInDate={checkInDate}
+               checkOutDate={checkOutDate}
+               specialOffer={room.specialOffer}
+               onCancel={() => setIsModalOpen(false)}
+            />
+         )}
+      </>
    );
 };
 export default RoomDetails;

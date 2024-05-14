@@ -8,6 +8,7 @@ import "aos/dist/aos.css";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+import "react-datepicker/dist/react-datepicker.css";
 import "leaflet/dist/leaflet.css";
 import "./index.css";
 
@@ -17,7 +18,7 @@ const queryClient = new QueryClient();
 ReactDOM.createRoot(document.getElementById("root")).render(
    <React.StrictMode>
       <QueryClientProvider client={queryClient}>
-      <RouterProvider />
+         <RouterProvider />
       </QueryClientProvider>
    </React.StrictMode>
 );

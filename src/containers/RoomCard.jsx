@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Message, Star } from "@icons";
+import { Message } from "@icons";
 import StarRating from "@containers/StarRating";
 import ReviewFormModal from "@containers/ReviewFormModal";
+import Star from "@icons/Star";
 
 const RoomCard = ({ room }) => {
    const [isModalOpen, setIsModalOpen] = useState(false);
