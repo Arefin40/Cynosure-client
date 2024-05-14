@@ -1,9 +1,11 @@
 import Button from "@components/Button";
 import Modal from "@components/Modal";
+import { useAuth } from "@contexts/AuthContext";
 import { dateDifferenceInDays, formattedDate } from "@utils/DateTime";
 
 const BookingConfirmationModal = ({
    isModalOpen,
+   roomId,
    roomType,
    roomImage,
    roomPrice,
@@ -13,6 +15,7 @@ const BookingConfirmationModal = ({
    onConfirmBooking,
    onCancel,
 }) => {
+   const { user } = useAuth();
    const nights = dateDifferenceInDays(checkOutDate, checkInDate);
 
    const regularPrice = roomPrice * nights;
@@ -42,26 +45,34 @@ const BookingConfirmationModal = ({
    }
 
    const onConfirm = () => {
-      onConfirmBooking(totalPrice);
+      onConfirmBooking({
+         roomId,
+         bookedBy: user.email,
+         checkInDate,
+         checkOutDate,
+         totalPrice,
+      });
    };
 
    return (
       <Modal
          isOpen={isModalOpen}
-         className="pb-5 sm:pb-6 w-full max-w-lg grid gap-y-4 rounded-xl shadow-xl z-50 flex-shrink-0 bg-white animate-scale-in overflow-hidden text-gray-500 text-sm"
+         className="py-5 sm:py-6 w-full max-w-lg grid gap-y-4 rounded-xl shadow-xl z-50 flex-shrink-0 bg-white animate-scale-in overflow-hidden text-gray-500 text-sm border"
       >
-         <img src={roomImage} className="w-full aspect-[2/1] object-cover" />
+         <div className="space-y-1 text-center">
+            <h1 className="text-xl text-gray-800 font-semibold">
+               Booking Confirmation
+            </h1>
+            <p>To reserve the room please confirm your booking</p>
+         </div>
 
-         <h2 className="text-gray-800 text-xl font-semibold text-center">
-            Booking Confirmation
-         </h2>
-
-         <h4 className="block px-5 sm:px-6 py-2 bg-gray-100 text-gray-800 text-lg font-semibold">
-            {roomType}
+         <h4 className="px-5 sm:px-6 py-2 bg-gray-100 flex gap-x-3 text-lg">
+            <span>Room: </span>
+            <span className="text-gray-800 font-semibold">{roomType}</span>
          </h4>
 
          <div className="px-5 sm:px-6 divide-y space-y-4">
-            <div className="flex items-center gap-x-4 justify-between flex-wrap">
+            <div className="flex items-center gap-x-4 gap-y-3 justify-between flex-wrap">
                <div className="space-y-1">
                   <h2>Check-In</h2>
                   <time className="block text-gray-800 font-semibold">
@@ -107,11 +118,11 @@ const BookingConfirmationModal = ({
             </div>
          </div>
 
-         <div className="mt-5 mx-auto w-full grid grid-cols-2 gap-x-2 max-w-80">
-            <Button color="primary" onClick={onConfirm}>
+         <div className="px-5 mt-5 mx-auto max-w-96 w-full flex flex-wrap justify-center gap-2">
+            <Button color="primary" onClick={onConfirm} className="w-40">
                Confirm Booking
             </Button>
-            <Button variant="outlined" onClick={onCancel}>
+            <Button variant="outlined" onClick={onCancel} className="w-40">
                Cancel
             </Button>
          </div>

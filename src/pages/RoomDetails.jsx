@@ -1,21 +1,26 @@
+import axios, { useAxiosSecure } from "@hooks/axios";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { Area, Love, Share } from "@icons";
+import { useAuth } from "@contexts/AuthContext";
 import { DatePicker } from "@components/Form";
-import axios from "@hooks/axios";
+import { Area, Love, Share } from "@icons";
 import Button from "@components/Button";
 import StarRating from "@containers/StarRating";
 import ReviewSection from "@containers/ReviewSection";
 import LoadingState from "@components/LoadingState";
-import { dateDifferenceInDays } from "@utils/DateTime";
 import BookingConfirmationModal from "@containers/BookingConfirmationModal";
+import toast from "react-hot-toast";
 
 const RoomDetails = () => {
    const [isModalOpen, setIsModalOpen] = useState(false);
-   const [checkInDate, setCheckInDate] = useState();
-   const [checkOutDate, setCheckOutDate] = useState();
+   const [checkInDate, setCheckInDate] = useState(null);
+   const [checkOutDate, setCheckOutDate] = useState(null);
    const [images, setImages] = useState([]);
+   const axiosSecure = useAxiosSecure();
+   const { user } = useAuth();
+   const navigate = useNavigate();
+   const location = useLocation();
 
    const { id } = useParams();
    const { data: room = {}, isLoading } = useQuery({
@@ -38,14 +43,30 @@ const RoomDetails = () => {
       else if (index === 2) setImages([images[2], images[0], images[1]]);
    };
 
-   const getPrice = () => {
-      return room.price * dateDifferenceInDays(checkOutDate, checkInDate);
-   };
-
    const getMinDate = (increamentBy) => {
       let minDate = new Date();
       minDate.setDate(minDate.getDate() + increamentBy);
       return minDate;
+   };
+
+   const handleReserve = () => {
+      if (!user)
+         return navigate("/login", {
+            replace: true,
+            state: location?.pathname,
+         });
+      setIsModalOpen(true);
+   };
+
+   const bookThisRoom = (data) => {
+      axiosSecure
+         .post("/bookings", data)
+         .then((res) => toast.success(res.data.message))
+         .catch((err) => toast.error(err.response.data.message));
+
+      setIsModalOpen(false);
+      setCheckInDate(null);
+      setCheckOutDate(null);
    };
 
    return (
@@ -171,7 +192,7 @@ const RoomDetails = () => {
 
                   <Button
                      color="primary"
-                     onClick={() => setIsModalOpen(true)}
+                     onClick={handleReserve}
                      disabled={
                         room?.bookingStatus !== "available" ||
                         !checkInDate ||
@@ -197,12 +218,14 @@ const RoomDetails = () => {
          {isModalOpen && (
             <BookingConfirmationModal
                isModalOpen={isModalOpen}
+               roomId={room._id}
                roomImage={room.images[0]}
                roomType={room.roomType}
                roomPrice={room.price}
                checkInDate={checkInDate}
                checkOutDate={checkOutDate}
                specialOffer={room.specialOffer}
+               onConfirmBooking={bookThisRoom}
                onCancel={() => setIsModalOpen(false)}
             />
          )}
