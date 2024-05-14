@@ -70,7 +70,11 @@ const Homepage = () => {
          </section>
 
          <section className="container space-y-32 sm:space-y-40">
-            <section className="grid lg:grid-cols-2 gap-x-16 gap-y-10 items-center">
+            <section
+               data-aos="fade-up"
+               data-aos-anchor-placement="center-bottom"
+               className="grid lg:grid-cols-2 gap-x-16 gap-y-10 items-center"
+            >
                <div>
                   <h4 className="text-gray-800 font-medium">Discover</h4>
 
@@ -99,7 +103,35 @@ const Homepage = () => {
                <MapView />
             </section>
 
-            <section className="overflow-hidden">
+            <section
+               data-aos="fade-up"
+               data-aos-anchor-placement="center-bottom"
+               className="px-5 py-10 grid md:flex gap-x-16 md:gap-x-16 gap-y-6 justify-center text-center text-white uppercase bg-discount-pattern rounded-xl flex-wrap"
+            >
+               <div className="grid sm:flex gap-x-10 gap-y-6">
+                  <div className="grid gap-y-2">
+                     <h2 className="text-5xl font-bold">10% OFF</h2>
+                     <p>Stay 2 nights</p>
+                  </div>
+                  <div className="grid gap-y-2">
+                     <h2 className="text-5xl font-bold">20% OFF</h2>
+                     <p>Stay 5 nights</p>
+                  </div>
+               </div>
+
+               <div className="grid gap-y-2">
+                  <p>Only when you</p>
+                  <Button color="bg-[#e42867] hover:bg-[#c42158]">
+                     Click Here
+                  </Button>
+               </div>
+            </section>
+
+            <section
+               data-aos="fade-up"
+               data-aos-anchor-placement="center-bottom"
+               className="overflow-hidden"
+            >
                <div className="mb-16 sm:mb-20 flex items-center justify-between gap-y-6 flex-col lg:flex-row">
                   <div className="max-w-2xl lg:max-w-none text-center lg:text-left">
                      <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-gray-900">
@@ -144,7 +176,10 @@ const Homepage = () => {
                </Swiper>
             </section>
 
-            <section>
+            <section
+               data-aos="fade-up"
+               data-aos-anchor-placement="center-bottom"
+            >
                <SectionHeading
                   title="Happy Customers"
                   className="text-center lg:text-left"
@@ -204,7 +239,11 @@ const Homepage = () => {
                </div>
             </section>
 
-            <section className="px-4 md:px-8 py-12 lg:py-16 grid justify-items-center bg-gray-100">
+            <section
+               data-aos="fade-up"
+               data-aos-anchor-placement="center-bottom"
+               className="px-4 md:px-8 py-12 lg:py-16 grid justify-items-center bg-gray-100"
+            >
                <SectionHeading title="Get Exclusive Updates and Offers">
                   Sign up for our newsletter to receive the latest updates,
                   deals, and exclusive offers.

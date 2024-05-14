@@ -1,10 +1,17 @@
-import Header from "@containers/Header";
-import { Outlet } from "react-router-dom";
+import { useLayoutEffect } from "react";
+import { Outlet, useLocation } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "@contexts/AuthContext";
+import Header from "@containers/Header";
 import Footer from "@containers/Footer";
 
 const Layout = () => {
+   const location = useLocation();
+
+   useLayoutEffect(() => {
+      if (location.pathname !== "/") document.documentElement.scrollTo(0, 0);
+   }, [location.pathname]);
+
    return (
       <AuthProvider>
          <Toaster />

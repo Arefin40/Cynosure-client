@@ -10,7 +10,11 @@ const RoomCard = ({ room }) => {
 
    return (
       <>
-         <div className="isolate">
+         <div
+            data-aos="fade-up"
+            data-aos-anchor-placement="top-bottom"
+            className="isolate"
+         >
             <div className="relative">
                <Link to={`/rooms/${room?._id}`}>
                   <img

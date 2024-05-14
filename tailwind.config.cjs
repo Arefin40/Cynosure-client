@@ -9,7 +9,12 @@ export default {
             sans: ["Mulish", "sans-serif"],
          },
          colors: {
-            primary: colors.rose,
+            primary: {
+               ...colors.rose,
+               500: "#e42868",
+               600: "#bf1e55",
+               700: "#ac254b",
+            },
          },
          keyframes: {
             "scale-in": {

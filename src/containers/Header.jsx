@@ -20,10 +20,10 @@ const navigations = [
       label: "My Bookings",
       userOnly: true,
    },
-   {
-      path: "/gallery",
-      label: "Gallery",
-   },
+   // {
+   //    path: "/gallery",
+   //    label: "Gallery",
+   // },
    {
       path: "/contact",
       label: "Contact us",
