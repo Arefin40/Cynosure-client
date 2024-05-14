@@ -10,6 +10,7 @@ import {
    signOut,
 } from "firebase/auth";
 import { auth } from "../firebase";
+import axios from "axios";
 import toast from "react-hot-toast";
 
 const AuthContext = createContext(null);
@@ -30,6 +31,22 @@ const providers = {
    google: new GoogleAuthProvider(),
    github: new GithubAuthProvider(),
    facebook: new FacebookAuthProvider(),
+};
+
+const issueToken = async (user) => {
+   console.log("issueToken");
+   axios.post(
+      `${import.meta.env.APP_API_URL}/jwt`,
+      { email: user?.email },
+      { withCredentials: true }
+   );
+};
+
+const clearToken = async () => {
+   console.log("clearToken");
+   axios.get(`${import.meta.env.APP_API_URL}/logout`, {
+      withCredentials: true,
+   });
 };
 
 export const AuthProvider = ({ children }) => {
@@ -58,7 +75,9 @@ export const AuthProvider = ({ children }) => {
       setIsAuthenticating(true);
 
       try {
-         await signInWithPopup(auth, providers[authProvider]);
+         //prettier-ignore
+         const userCredential = await signInWithPopup(auth, providers[authProvider]);
+         await issueToken(userCredential?.user);
          if (callbackFunction) callbackFunction();
          toast.success("Signed in successfully");
       } catch (error) {
@@ -69,7 +88,9 @@ export const AuthProvider = ({ children }) => {
    const logIn = async ({ email, password }, callbackFunction) => {
       setIsAuthenticating(true);
       try {
-         await signInWithEmailAndPassword(auth, email, password);
+         //prettier-ignore
+         const userCredential = await signInWithEmailAndPassword(auth, email, password);
+         await issueToken(userCredential?.user);
          if (callbackFunction) callbackFunction();
          toast.success("Signed-in successfully");
       } catch (error) {
@@ -81,6 +102,7 @@ export const AuthProvider = ({ children }) => {
       setIsAuthenticating(true);
       try {
          await signOut(auth);
+         await clearToken();
          toast.success("Signed-out successfully");
       } catch (error) {
          console.error(error);
