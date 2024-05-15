@@ -9,6 +9,7 @@ import LoadingState from "@components/LoadingState";
 import Button from "@components/Button";
 
 const Rooms = () => {
+   document.title = "Cynosure  |  Rooms";
    const [value, setValue] = useState([0, 1000]);
    const [filter, setFilter] = useState([0, 1000]);
    const { ref, isVisible, toggle } = useDropdown();

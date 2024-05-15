@@ -13,6 +13,7 @@ import BookingConfirmationModal from "@containers/BookingConfirmationModal";
 import toast from "react-hot-toast";
 
 const RoomDetails = () => {
+   document.title = "Cynosure  | Room Details";
    const [isModalOpen, setIsModalOpen] = useState(false);
    const [checkInDate, setCheckInDate] = useState(null);
    const [checkOutDate, setCheckOutDate] = useState(null);

@@ -45,6 +45,7 @@ const Status = ({ status = "" }) => {
 };
 
 const MyBookings = () => {
+   document.title = "Cynosure  |  My Bookings";
    const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
    const [isRescheduleModalOpen, setIsRescheduleModalOpen] = useState(false);
    const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
