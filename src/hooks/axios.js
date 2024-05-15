@@ -20,7 +20,7 @@ export const useAxiosSecure = () => {
       (res) => res,
 
       async (error) => {
-         console.log("Error from axios interceptor", error.response);
+         console.error("Error from axios interceptor", error.response);
 
          if (error.response.status === 401 || error.response.status === 403) {
             await signOut();

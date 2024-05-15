@@ -34,7 +34,6 @@ const providers = {
 };
 
 const issueToken = async (user) => {
-   console.log("issueToken");
    axios.post(
       `${import.meta.env.APP_API_URL}/jwt`,
       { email: user?.email },
@@ -43,7 +42,6 @@ const issueToken = async (user) => {
 };
 
 const clearToken = async () => {
-   console.log("clearToken");
    axios.get(`${import.meta.env.APP_API_URL}/logout`, {
       withCredentials: true,
    });
@@ -53,10 +51,7 @@ export const AuthProvider = ({ children }) => {
    const [user, setUser] = useState(null);
    const [isAuthenticating, setIsAuthenticating] = useState(true);
 
-   const createAccount = async (
-      { displayName, photoURL, email, password },
-      callbackFunction
-   ) => {
+   const createAccount = async ({ displayName, photoURL, email, password }, callbackFunction) => {
       setIsAuthenticating(true);
       try {
          //prettier-ignore
@@ -126,7 +121,5 @@ export const AuthProvider = ({ children }) => {
       signOut: logOut,
    };
 
-   return (
-      <AuthContext.Provider value={values}>{children}</AuthContext.Provider>
-   );
+   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
 };

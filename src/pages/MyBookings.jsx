@@ -49,13 +49,14 @@ const MyBookings = () => {
    const [isRescheduleModalOpen, setIsRescheduleModalOpen] = useState(false);
    const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
    const [selection, setSelection] = useState(null);
+   const [refresh, setRefresh] = useState(false);
 
    const axiosSecure = useAxiosSecure();
    const { user } = useAuth();
 
    let { data: bookings = [], isLoading } = useQuery({
       queryFn: () => axiosSecure.get(`/bookings/${user.email}`).then((res) => res.data),
-      queryKey: ["bookings", user],
+      queryKey: ["bookings", user, refresh],
    });
 
    const handleReschedule = (booking) => {
@@ -76,6 +77,7 @@ const MyBookings = () => {
          const res = await axiosSecure.delete(`/bookings/${selection._id}`);
          toast.success(res.data.message);
          setIsCancelModalOpen(true);
+         setRefresh((prevState) => !prevState);
       } catch (error) {
          toast.error(err.response.data.message);
       }
@@ -85,6 +87,8 @@ const MyBookings = () => {
       try {
          const res = await axiosSecure.patch(`/booking/${selection._id}`, data);
          toast.success(res.data.message);
+         setRefresh((prevState) => !prevState);
+         setIsRescheduleModalOpen(false);
       } catch (error) {
          toast.error(error.response.data.message);
       }
@@ -93,7 +97,11 @@ const MyBookings = () => {
    const postReview = async (data) => {
       try {
          const res = await axiosSecure.post("/reviews", {
-            userId: user.email,
+            user: {
+               email: user.email,
+               name: user.displayName,
+               image: user.photoURL,
+            },
             roomId: selection.roomId,
             bookingId: selection._id,
             ...data,

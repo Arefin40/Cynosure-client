@@ -1,10 +1,10 @@
 import Button from "@components/Button";
-import { Area, Bedroom } from "@icons/index";
+import { Area, Bedroom } from "@icons";
 
-const FeaturedRoom = ({ title, image }) => {
+const FeaturedRoom = ({ room }) => {
    return (
       <div className="w-full h-full relative flex flex-col gap-y-6 group overflow-hidden">
-         <img src={image} className="h-full object-cover" />
+         <img src={room?.images[0]} className="h-full object-cover" />
 
          <div className="absolute inset-0 top-1/2 bg-gradient-to-b from-black/0 to-black/100" />
 
@@ -17,19 +17,20 @@ const FeaturedRoom = ({ title, image }) => {
 
                <div className="flex items-center gap-x-2">
                   <Area />
-                  <h3>460 SQ FT</h3>
+                  <h3>{room?.size} Sq.ft.</h3>
                </div>
             </div>
 
             <h2 className="my-2 sm:my-3 font-semibold text-base sm:text-lg text-gray-200 uppercase">
-               {title}
+               {room?.roomType}
             </h2>
 
             <h4 className="mb-2 sm:mb-3 text-gray-200 text-xl sm:text-2xl font-semibold">
-               $580
+               ${room?.price}
             </h4>
 
             <Button
+               to={`/rooms/${room?._id}`}
                rounded
                color="primary"
                size="large"

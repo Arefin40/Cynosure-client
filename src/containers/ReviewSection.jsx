@@ -1,10 +1,20 @@
+import axios from "@hooks/axios";
+import { useQuery } from "@tanstack/react-query";
 import { Select } from "@components/Form";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import { Arrow } from "@icons";
 import Review from "@containers/Review";
 
-const ReviewSection = ({ rating = 0, reviews = [] }) => {
+const ReviewSection = ({ rating = 0, totalReviews = 0, roomId }) => {
+   const { data: reviews = [], isLoadingReviews } = useQuery({
+      queryKey: ["reviews", roomId],
+      queryFn: async () => {
+         const { data } = await axios.get(`/reviews/${roomId}`);
+         return data;
+      },
+   });
+
    let remark = "";
 
    if (reviews.length === 0) remark = "No reviews";
@@ -31,7 +41,7 @@ const ReviewSection = ({ rating = 0, reviews = [] }) => {
                   <h4 className="text-gray-800">{remark}</h4>·
                   <p className="font-normal text-base space-x-1">
                      <span>Based on:</span>
-                     <span className="text-gray-800 font-medium">{reviews.length} reviews</span>
+                     <span className="text-gray-800 font-medium">{totalReviews} reviews</span>
                   </p>
                </div>
 
@@ -63,30 +73,13 @@ const ReviewSection = ({ rating = 0, reviews = [] }) => {
                      prevEl: ".review-slide-prev",
                   }}
                >
-                  {reviews.length > 0 ? (
+                  {!isLoadingReviews && reviews.length > 0 ? (
                      <>
-                        <SwiperSlide className="h-auto">
-                           <Review>
-                              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempora eum
-                              aliquid consectetur excepturi, reiciendis quibusdam minus dolores
-                              doloribus aliquam assumenda.
-                           </Review>
-                        </SwiperSlide>
-
-                        <SwiperSlide className="h-auto">
-                           <Review>
-                              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempora eum
-                              aliquid consectetur.
-                           </Review>
-                        </SwiperSlide>
-
-                        <SwiperSlide className="h-auto">
-                           <Review>
-                              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempora eum
-                              aliquid consectetur excepturi, reiciendis quibusdam minus dolores
-                              doloribus aliquam assumenda.
-                           </Review>
-                        </SwiperSlide>
+                        {reviews.map((review, i) => (
+                           <SwiperSlide key={i} className="h-auto">
+                              <Review review={review}>{review.comment.body}</Review>
+                           </SwiperSlide>
+                        ))}
                      </>
                   ) : (
                      Array.from({ length: 3 }).map((_, i) => (
