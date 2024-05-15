@@ -79,7 +79,7 @@ const MyBookings = () => {
          setIsCancelModalOpen(true);
          setRefresh((prevState) => !prevState);
       } catch (error) {
-         toast.error(err.response.data.message);
+         toast.error(error.response.data.message);
       }
    };
 
