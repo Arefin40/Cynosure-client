@@ -58,15 +58,16 @@ const RoomDetails = () => {
       setIsModalOpen(true);
    };
 
-   const bookThisRoom = (data) => {
-      axiosSecure
-         .post("/bookings", data)
-         .then((res) => toast.success(res.data.message))
-         .catch((err) => toast.error(err.response.data.message));
-
+   const bookThisRoom = async (data) => {
+      try {
+         const res = await axiosSecure.post("/bookings", data);
+         toast.success(res.data.message);
       setIsModalOpen(false);
       setCheckInDate(null);
       setCheckOutDate(null);
+      } catch (error) {
+         toast.error(err.response.data.message);
+      }
    };
 
    return (
