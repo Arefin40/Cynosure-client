@@ -13,6 +13,8 @@ import "leaflet/dist/leaflet.css";
 import "react-range-slider-input/dist/style.css";
 import "./index.css";
 
+if (!localStorage.getItem("is-promotion-shown")) localStorage.setItem("is-promotion-shown", "no");
+
 AOS.init({
    once: true,
 });

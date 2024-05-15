@@ -19,13 +19,13 @@ const RoomCard = ({ room }) => {
                   />
                </Link>
 
-               <button
+               {/* <button
                   onClick={() => setIsModalOpen(true)}
                   className="px-3 py-2 absolute bottom-2 left-1/2 -translate-x-1/2 text-sm flex items-center gap-x-2 bg-blur !bg-opacity-75 rounded-full whitespace-nowrap transition-all active:scale-90"
                >
                   <Message />
                   <span className="font-medium text-gray-800">Give review</span>
-               </button>
+               </button> */}
             </div>
 
             <div className="mt-5 flex justify-between gap-x-2 flex-wrap">
