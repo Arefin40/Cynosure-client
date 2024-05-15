@@ -2,12 +2,7 @@ import { forwardRef, createContext, useContext } from "react";
 
 const RadioContext = createContext();
 
-const Radio = ({
-   className = "flex items-center",
-   withAppearance = false,
-   children,
-   ...props
-}) => {
+const Radio = ({ className = "flex items-center", withAppearance = false, children, ...props }) => {
    const { ref, name, value, onChange, onBlur } = useContext(RadioContext);
 
    return (
@@ -15,7 +10,6 @@ const Radio = ({
          <input
             type="radio"
             ref={ref}
-            id={name}
             name={name}
             onChange={onChange}
             onBlur={onBlur}
@@ -40,19 +34,13 @@ const RadioGroup = forwardRef(
          <RadioContext.Provider value={{ ref, name, value, onChange, onBlur }}>
             <div className="grid gap-y-2">
                <div className="flex items-center gap-x-2">
-                  {label && (
-                     <label className="text-sm font-semibold text-gray-900">
-                        {label}
-                     </label>
-                  )}
+                  {label && <label className="text-sm font-semibold text-gray-900">{label}</label>}
 
                   <div className={className}>{children}</div>
                </div>
 
                {errors?.[name] && (
-                  <span className="text-sm text-rose-500">
-                     {errors[name].message}
-                  </span>
+                  <span className="text-sm text-rose-500">{errors[name].message}</span>
                )}
             </div>
          </RadioContext.Provider>

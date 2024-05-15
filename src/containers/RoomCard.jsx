@@ -10,11 +10,7 @@ const RoomCard = ({ room }) => {
 
    return (
       <>
-         <div
-            data-aos="fade-up"
-            data-aos-anchor-placement="top-bottom"
-            className="isolate"
-         >
+         <div data-aos="fade-up" data-aos-anchor-placement="top-bottom" className="isolate">
             <div className="relative">
                <Link to={`/rooms/${room?._id}`}>
                   <img
@@ -36,9 +32,7 @@ const RoomCard = ({ room }) => {
                <div className="grid gap-y-1">
                   <div className="flex items-center gap-x-2">
                      <Link to={`/rooms/${room?._id}`}>
-                        <h1 className="text-lg font-semibold text-gray-800">
-                           {room?.roomType}
-                        </h1>
+                        <h1 className="text-lg font-semibold text-gray-800">{room?.roomType}</h1>
                      </Link>
 
                      {room?.specialOffer !== "nil" && (
@@ -51,17 +45,13 @@ const RoomCard = ({ room }) => {
 
                   <div className="flex items-center gap-x-2 text-sm">
                      <StarRating rating={room?.rating} />
-                     <h4 className="text-gray-800">
-                        {room?.totalReviews} reviews
-                     </h4>
+                     <h4 className="text-gray-800">{room?.totalReviews} reviews</h4>
                   </div>
                </div>
 
                <div className="grid content-center">
                   <h4 className="flex gap-x-1 items-center">
-                     <span className="text-lg font-semibold text-primary-500">
-                        ${room?.price}
-                     </span>
+                     <span className="text-lg font-semibold text-primary-500">${room?.price}</span>
                      <span>/ night</span>
                   </h4>
 
@@ -74,11 +64,12 @@ const RoomCard = ({ room }) => {
             </div>
          </div>
 
-         <ReviewFormModal
-            isModalOpen={isModalOpen}
-            onSubmit={(data) => console.log(data)}
-            onCancel={() => setIsModalOpen(false)}
-         />
+         {isModalOpen && (
+            <ReviewFormModal
+               onSubmit={(data) => console.log(data)}
+               onCancel={() => setIsModalOpen(false)}
+            />
+         )}
       </>
    );
 };

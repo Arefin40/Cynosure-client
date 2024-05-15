@@ -16,6 +16,9 @@ export default {
                700: "#ac254b",
             },
          },
+         gridTemplateColumns: {
+            table: "minmax(12.5rem,1fr) 10rem 10rem 9rem 9rem 13.125rem",
+         },
          keyframes: {
             "scale-in": {
                "0%": { opacity: 0, transform: "scale(0.5)" },

@@ -48,6 +48,8 @@ export default ({
             )}
 
             <DatePicker
+               id={name}
+               name={name}
                onChange={onChange}
                placeholderText={placeholder}
                selected={value}

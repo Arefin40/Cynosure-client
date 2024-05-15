@@ -12,7 +12,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import "leaflet/dist/leaflet.css";
 import "./index.css";
 
-AOS.init();
+AOS.init({
+   once: true,
+});
 const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root")).render(

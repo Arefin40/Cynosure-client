@@ -1,36 +1,50 @@
-import Button from "@components/Button";
-import Modal from "@components/Modal";
+import { useState, useEffect } from "react";
 import { useAuth } from "@contexts/AuthContext";
 import { dateDifferenceInDays, formattedDate } from "@utils/DateTime";
+import axios from "@hooks/axios";
+import Modal from "@components/Modal";
+import { useQuery } from "@tanstack/react-query";
 
 const BookingConfirmationModal = ({
-   isModalOpen,
+   isPatch = false,
    roomId,
-   roomType,
-   roomImage,
-   roomPrice,
+   roomData,
    checkOutDate,
    checkInDate,
-   specialOffer,
    onConfirmBooking,
    onCancel,
 }) => {
    const { user } = useAuth();
-   const nights = dateDifferenceInDays(checkOutDate, checkInDate);
 
-   const regularPrice = roomPrice * nights;
+   const fetchData = async () => {
+      const { data } = await axios.get(`/rooms/${roomId}`);
+      return data;
+   };
+
+   const { data: room, isLoading } = useQuery({
+      queryKey: ["roomBookingData", roomId],
+      queryFn: fetchData,
+      initialData: roomData || {},
+      enabled: !roomData,
+      onError: (error) => console.error(error.message),
+   });
+
+   if (isLoading) {
+      return <div>Loading...</div>;
+   }
+
+   const nights = dateDifferenceInDays(checkOutDate, checkInDate);
+   const regularPrice = room.price * nights;
    let totalPrice = regularPrice;
    let discount = 0;
    let discountAmount = 0;
 
-   if (specialOffer) {
-      const { validFrom, validUntil, packages } = specialOffer;
+   if (room.specialOffer) {
+      const { validFrom, validUntil, packages } = room.specialOffer;
 
       const validFromDate = new Date(validFrom);
-
       let date = new Date();
       date.setDate(date.getDate() + 60);
-
       const validUntilDate = validUntil !== "nil" ? new Date(validUntil) : date;
 
       if (checkInDate >= validFromDate && checkOutDate <= validUntilDate) {
@@ -45,44 +59,50 @@ const BookingConfirmationModal = ({
    }
 
    const onConfirm = () => {
-      onConfirmBooking({
+      const bookingDetails = { checkInDate, checkOutDate, totalPrice };
+      const roomDetails = {
          roomId,
+         roomType: room.roomType,
          bookedBy: user.email,
-         checkInDate,
-         checkOutDate,
-         totalPrice,
-      });
+      };
+      onConfirmBooking(
+         isPatch ? bookingDetails : { ...bookingDetails, ...roomDetails }
+      );
    };
 
    return (
       <Modal
-         isOpen={isModalOpen}
-         className="py-5 sm:py-6 w-full max-w-lg grid gap-y-4 rounded-xl shadow-xl z-50 flex-shrink-0 bg-white animate-scale-in overflow-hidden text-gray-500 text-sm border"
+         title="Booking Confirmation"
+         description="To reserve the room please confirm your booking"
+         wrapperClass="px-0"
+         className="text-gray-500 text-sm space-y-5"
+         submitButtonLabel="Confirm Booking"
+         onSubmit={onConfirm}
+         onCancel={onCancel}
       >
-         <div className="space-y-1 text-center">
-            <h1 className="text-xl text-gray-800 font-semibold">
-               Booking Confirmation
-            </h1>
-            <p>To reserve the room please confirm your booking</p>
-         </div>
-
          <h4 className="px-5 sm:px-6 py-2 bg-gray-100 flex gap-x-3 text-lg">
             <span>Room: </span>
-            <span className="text-gray-800 font-semibold">{roomType}</span>
+            <span className="text-gray-800 font-semibold">{room.roomType}</span>
          </h4>
 
          <div className="px-5 sm:px-6 divide-y space-y-4">
             <div className="flex items-center gap-x-4 gap-y-3 justify-between flex-wrap">
                <div className="space-y-1">
                   <h2>Check-In</h2>
-                  <time className="block text-gray-800 font-semibold">
+                  <time
+                     dateTime={checkInDate}
+                     className="block text-gray-800 font-semibold"
+                  >
                      {formattedDate(checkInDate)}
                   </time>
                </div>
 
                <div className="space-y-1">
                   <h2>Check-Out</h2>
-                  <time className="block text-gray-800 font-semibold">
+                  <time
+                     dateTime={checkOutDate}
+                     className="block text-gray-800 font-semibold"
+                  >
                      {formattedDate(checkOutDate)}
                   </time>
                </div>
@@ -100,6 +120,7 @@ const BookingConfirmationModal = ({
                   <h2>Regular price</h2>
                   <p className="text-gray-800 font-semibold">${regularPrice}</p>
                </div>
+
                {discount > 0 && (
                   <div className="flex items-center justify-between">
                      <h2>
@@ -111,20 +132,12 @@ const BookingConfirmationModal = ({
                      </p>
                   </div>
                )}
+
                <div className="flex items-center justify-between">
                   <h2>Total price</h2>
                   <p className="text-gray-800 font-semibold">${totalPrice}</p>
                </div>
             </div>
-         </div>
-
-         <div className="px-5 mt-5 mx-auto max-w-96 w-full flex flex-wrap justify-center gap-2">
-            <Button color="primary" onClick={onConfirm} className="w-40">
-               Confirm Booking
-            </Button>
-            <Button variant="outlined" onClick={onCancel} className="w-40">
-               Cancel
-            </Button>
          </div>
       </Modal>
    );

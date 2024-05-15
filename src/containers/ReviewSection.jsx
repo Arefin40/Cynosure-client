@@ -1,14 +1,10 @@
-import { useState } from "react";
 import { Select } from "@components/Form";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import { Arrow } from "@icons";
 import Review from "@containers/Review";
-import ReviewFormModal from "@containers/ReviewFormModal";
 
 const ReviewSection = ({ rating = 0, reviews = [] }) => {
-   const [isModalOpen, setIsModalOpen] = useState(false);
-
    let remark = "";
 
    if (reviews.length === 0) remark = "No reviews";
@@ -31,28 +27,18 @@ const ReviewSection = ({ rating = 0, reviews = [] }) => {
 
             <div className="flex items-center justify-between gap-y-4 flex-wrap">
                <div className="flex items-center gap-x-2 font-semibold text-lg">
-                  <h2 className="px-2 py-0.5 rounded bg-primary-500 text-white">
-                     {rating}
-                  </h2>
+                  <h2 className="px-2 py-0.5 rounded bg-primary-500 text-white">{rating}</h2>
                   <h4 className="text-gray-800">{remark}</h4>·
                   <p className="font-normal text-base space-x-1">
                      <span>Based on:</span>
-                     <span className="text-gray-800 font-medium">
-                        {reviews.length} reviews
-                     </span>
+                     <span className="text-gray-800 font-medium">{reviews.length} reviews</span>
                   </p>
                </div>
 
                <div className="flex items-center gap-x-4 gap-y-2 flex-wrap">
-                  <button
-                     onClick={() => setIsModalOpen(true)}
-                     className="px-4 py-2 text-sm text-primary-500 bg-primary-50 rounded-full active:scale-90 transition-all"
-                  >
-                     Write a review
-                  </button>
-
                   <Select
                      label="Sort by:"
+                     name="reviewSortBy"
                      className="flex items-center gap-x-2"
                      defaultValue="timestamp"
                      options={[
@@ -81,25 +67,23 @@ const ReviewSection = ({ rating = 0, reviews = [] }) => {
                      <>
                         <SwiperSlide className="h-auto">
                            <Review>
-                              Lorem ipsum dolor, sit amet consectetur
-                              adipisicing elit. Tempora eum aliquid consectetur
-                              excepturi, reiciendis quibusdam minus dolores
+                              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempora eum
+                              aliquid consectetur excepturi, reiciendis quibusdam minus dolores
                               doloribus aliquam assumenda.
                            </Review>
                         </SwiperSlide>
 
                         <SwiperSlide className="h-auto">
                            <Review>
-                              Lorem ipsum dolor, sit amet consectetur
-                              adipisicing elit. Tempora eum aliquid consectetur.
+                              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempora eum
+                              aliquid consectetur.
                            </Review>
                         </SwiperSlide>
 
                         <SwiperSlide className="h-auto">
                            <Review>
-                              Lorem ipsum dolor, sit amet consectetur
-                              adipisicing elit. Tempora eum aliquid consectetur
-                              excepturi, reiciendis quibusdam minus dolores
+                              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempora eum
+                              aliquid consectetur excepturi, reiciendis quibusdam minus dolores
                               doloribus aliquam assumenda.
                            </Review>
                         </SwiperSlide>
@@ -125,12 +109,6 @@ const ReviewSection = ({ rating = 0, reviews = [] }) => {
                </div>
             </div>
          </section>
-
-         <ReviewFormModal
-            isModalOpen={isModalOpen}
-            onSubmit={(data) => console.log(data)}
-            onCancel={() => setIsModalOpen(false)}
-         />
       </>
    );
 };

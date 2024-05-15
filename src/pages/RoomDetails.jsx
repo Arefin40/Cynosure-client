@@ -62,9 +62,9 @@ const RoomDetails = () => {
       try {
          const res = await axiosSecure.post("/bookings", data);
          toast.success(res.data.message);
-      setIsModalOpen(false);
-      setCheckInDate(null);
-      setCheckOutDate(null);
+         setIsModalOpen(false);
+         setCheckInDate(null);
+         setCheckOutDate(null);
       } catch (error) {
          toast.error(err.response.data.message);
       }
@@ -109,13 +109,8 @@ const RoomDetails = () => {
                      <div className="p-4 rounded-lg bg-discount-pattern text-white uppercase">
                         <div className="flex gap-x-10 gap-y-1 justify-center flex-wrap">
                            {room.specialOffer.packages.map((_package, i) => (
-                              <div
-                                 key={i}
-                                 className="flex items-center gap-x-2"
-                              >
-                                 <h2 className="text-lg font-bold">
-                                    {_package.discount}% OFF
-                                 </h2>
+                              <div key={i} className="flex items-center gap-x-2">
+                                 <h2 className="text-lg font-bold">{_package.discount}% OFF</h2>
                                  <p>Stay {_package.conditions.nights} nights</p>
                               </div>
                            ))}
@@ -146,11 +141,7 @@ const RoomDetails = () => {
                         <Button rounded variant="outlined" startIcon={<Love />}>
                            Save
                         </Button>
-                        <Button
-                           rounded
-                           variant="outlined"
-                           startIcon={<Share />}
-                        >
+                        <Button rounded variant="outlined" startIcon={<Share />}>
                            Share
                         </Button>
                      </div>
@@ -168,15 +159,14 @@ const RoomDetails = () => {
 
                <div className="p-4 grid gap-y-2 rounded-xl border shadow-sm">
                   <div className="mb-2 flex items-center gap-x-1">
-                     <h2 className="text-2xl font-semibold text-gray-800">
-                        ${room?.price}
-                     </h2>
+                     <h2 className="text-2xl font-semibold text-gray-800">${room?.price}</h2>
                      <span>/ night</span>
                   </div>
 
                   <div className="grid grid-cols-[repeat(auto-fit,minmax(12rem,1fr))] items-center gap-2">
                      <DatePicker
                         label="Check-in"
+                        name="checkInDate"
                         className="w-full"
                         value={checkInDate}
                         minDate={getMinDate(1)}
@@ -184,6 +174,7 @@ const RoomDetails = () => {
                      />
                      <DatePicker
                         label="Check-out"
+                        name="checkOutDate"
                         className="w-full"
                         value={checkOutDate}
                         minDate={getMinDate(2)}
@@ -194,11 +185,7 @@ const RoomDetails = () => {
                   <Button
                      color="primary"
                      onClick={handleReserve}
-                     disabled={
-                        room?.bookingStatus !== "available" ||
-                        !checkInDate ||
-                        !checkOutDate
-                     }
+                     disabled={room?.bookingStatus !== "available" || !checkInDate || !checkOutDate}
                      className="w-full max-w-64 md:max-w-none justify-self-center"
                   >
                      Reserve
@@ -218,14 +205,14 @@ const RoomDetails = () => {
 
          {isModalOpen && (
             <BookingConfirmationModal
-               isModalOpen={isModalOpen}
                roomId={room._id}
-               roomImage={room.images[0]}
-               roomType={room.roomType}
-               roomPrice={room.price}
+               roomData={{
+                  roomType: room.roomType,
+                  price: room.price,
+                  specialOffer: room.specialOffer,
+               }}
                checkInDate={checkInDate}
                checkOutDate={checkOutDate}
-               specialOffer={room.specialOffer}
                onConfirmBooking={bookThisRoom}
                onCancel={() => setIsModalOpen(false)}
             />
