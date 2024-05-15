@@ -10,6 +10,7 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "react-datepicker/dist/react-datepicker.css";
 import "leaflet/dist/leaflet.css";
+import "react-range-slider-input/dist/style.css";
 import "./index.css";
 
 AOS.init({

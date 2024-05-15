@@ -44,3 +44,13 @@
    background-attachment: fixed;
    background-size: cover;
 }
+
+#range-slider .range-slider__thumb {
+   @apply bg-primary-500;
+   transition: transform 0.3s;
+}
+
+#range-slider .range-slider__range {
+   @apply bg-primary-500;
+   transition: height 0.3s;
+}
