@@ -33,3 +33,27 @@ Preview link: [Cynosure](https://sa-cynosure.web.app)
    [AOS](https://github.com/michalsnik/aos),
    [Swiper](https://github.com/nolimits4web/swiper),
    [React Hook form](https://github.com/react-hook-form/react-hook-form)
+
+## Live Links
+- [Live Website](https://sa-cynosure.web.app)
+- [Server-side GitHub Repository](https://github.com/Arefin40/Cynosure-server)
+
+## To run in your local machine
+
+For client side, run the following commands:
+```
+git clone https://github.com/Arefin40/Cynosure-client.git
+
+cd Cynosure-client && pnpm install
+
+pnpm run dev
+```
+
+For server side, run the following commands:
+```
+git clone https://github.com/Arefin40/Cynosure-server.git
+
+cd Cynosure-server && pnpm install
+
+pnpm run dev
+```
