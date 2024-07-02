@@ -77,11 +77,11 @@ const MyBookings = () => {
       try {
          const res = await axiosSecure.delete(`/bookings/${selection._id}`);
          toast.success(res.data.message);
-         setIsCancelModalOpen(true);
          setRefresh((prevState) => !prevState);
       } catch (error) {
          toast.error(error.response.data.message);
       }
+      setIsCancelModalOpen(false);
    };
 
    const updateBooking = async (data) => {
@@ -89,10 +89,10 @@ const MyBookings = () => {
          const res = await axiosSecure.patch(`/booking/${selection._id}`, data);
          toast.success(res.data.message);
          setRefresh((prevState) => !prevState);
-         setIsRescheduleModalOpen(false);
       } catch (error) {
          toast.error(error.response.data.message);
       }
+      setIsRescheduleModalOpen(false);
    };
 
    const postReview = async (data) => {
@@ -111,6 +111,7 @@ const MyBookings = () => {
       } catch (error) {
          toast.error(error.response.data.message);
       }
+      setIsReviewModalOpen(false);
    };
 
    if (isLoading) return <LoadingState />;

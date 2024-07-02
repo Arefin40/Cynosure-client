@@ -201,7 +201,7 @@ const RoomDetails = () => {
                <p>{room?.description}</p>
             </section>
 
-            <ReviewSection roomId={id} />
+            <ReviewSection roomId={id} rating={room?.rating} totalReviews={room?.totalReviews} />
          </section>
 
          {isModalOpen && (
